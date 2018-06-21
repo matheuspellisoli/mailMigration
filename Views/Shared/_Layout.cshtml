@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mail_migration</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" />        
+    </environment>
+    
+    <environment exclude="Development">
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />     
+        <link rel="stylesheet" href="~/css/site.css"  asp-append-version="true" />     
+    </environment>
+</head>
+<body>
+<nav class="navbar  navbar-fixed-top">
+        <div class="container"> 
+            <a href="/" class="navbar-brand mb-0 d-flex">
+                    <img src="/images/logo-redehost.svg" class="logo" alt="RedeHost">
+            </a>  
+            <ul class="nav">  
+                <li class="nav-item">
+                    <a href="https://webmail.redehost.com.br/" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-envelope-o"></i> Webmail
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://painel.redehost.com.br/Login.aspx" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-cog"></i>Painel
+                    </a>
+                </li>
+            </ul>
+        </div>
+</nav>
+
+    
+
+
+
+    <div class="container body-content ">
+        @RenderBody()
+        <hr>
+        <footer class="text-center">
+            <p class="margin-small">&copy; 2018 Todos direitos reservados.Política de privacidade</p>
+        </footer>
+    </div>
+
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
