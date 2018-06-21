@@ -10,6 +10,10 @@ namespace mail_migration.Models
         public int port { get; set; }
         
         public Boolean ssl { get; set; }
+
+        public String getSsl(){
+            return (this.ssl ? "true" :"false");
+        }
         
     }
 }

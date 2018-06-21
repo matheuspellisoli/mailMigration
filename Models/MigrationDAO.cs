@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace mail_migration.Models
 
 {
-    public class ConnectionModel
+    public class MigrationDAO
     {
        
      
@@ -16,7 +16,7 @@ namespace mail_migration.Models
     private IMongoDatabase _database;
     private IMongoCollection<MigrationOperetionModel> _collection;
     
-    public ConnectionModel()
+    public MigrationDAO()
     {
         _client = new MongoClient("mongodb://DBUserMigration:e2SW3!hX@ds263670.mlab.com:63670/migration");
         _database = _client.GetDatabase("migration");
@@ -30,7 +30,13 @@ namespace mail_migration.Models
              _collection.InsertOne(migration);
 
         }
+        
+        public MigrationOperetionModel getMigration(int idMigration){
 
+            var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", idMigration);
+            
+           return _collection.Find(filter).Single();
+        }
 
         public List<MigrationOperetionModel> getAllMigration()
         {

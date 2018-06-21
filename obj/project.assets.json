@@ -13131,11 +13131,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/matheus/projetos/redehost/mailMigration/mail-migration.csproj",
+      "projectUniqueName": "/home/matheus/projetos/redehost/_mailMigration/mail-migration.csproj",
       "projectName": "mail-migration",
-      "projectPath": "/home/matheus/projetos/redehost/mailMigration/mail-migration.csproj",
+      "projectPath": "/home/matheus/projetos/redehost/_mailMigration/mail-migration.csproj",
       "packagesPath": "/home/matheus/.nuget/packages/",
-      "outputPath": "/home/matheus/projetos/redehost/mailMigration/obj/",
+      "outputPath": "/home/matheus/projetos/redehost/_mailMigration/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"
