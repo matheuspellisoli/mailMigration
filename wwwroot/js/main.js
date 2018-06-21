@@ -79,6 +79,7 @@ const errors = {
 }
 
 
+
 $(document).ready(function($) {
 	providers.forEach(item => {
 		$("#provider").append(new Option(item.name,providers.indexOf(item)));

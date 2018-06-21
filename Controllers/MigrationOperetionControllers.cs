@@ -11,11 +11,11 @@ namespace mail_migration.Controllers
 {   
     [Route("api")]  
     public class MigrationOperetionControllers : Controller{
-    private IConfiguration _iconfiguration;
+    private readonly IConfiguration _iconfiguration;
     
     
-    public MigrationOperetionControllers(IConfiguration iconfiguration){
-        _iconfiguration = iconfiguration;
+    public MigrationOperetionControllers(IConfiguration configuration){
+        _iconfiguration = configuration;
     }
     
     [HttpGet]
@@ -36,18 +36,6 @@ namespace mail_migration.Controllers
        
     }
 
-    [HttpGet("csv")]    
-        public FileContentResult Download(int id)
-    {
-        MigrationOperetionModel b = MigrationOperetionModel.getMigration(id);
-
-        string csvContent = b.generetionCSV();
-        var data = Encoding.UTF8.GetBytes(csvContent);
-        string filename = b.domain +".csv";
-        string mime = "text/csv";
-        return File(data, mime, filename);
-    }
-
     [Produces("application/json")]
     
     [HttpPost]        
@@ -60,6 +48,17 @@ namespace mail_migration.Controllers
         return new ObjectResult(obj);
     }
 
+        [HttpGet("csv")]    
+        public FileContentResult Download(int id)
+    {
+        MigrationOperetionModel b = MigrationOperetionModel.getMigration(id);
+
+        string csvContent = b.generetionCSV();
+        var data = Encoding.UTF8.GetBytes(csvContent);
+        string filename = b.domain +".csv";
+        string mime = "text/csv";
+        return File(data, mime, filename);
+    }
 
 
     
