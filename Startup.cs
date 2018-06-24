@@ -22,6 +22,7 @@ namespace mail_migration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IConfiguration>(Configuration);
+            // services.aut
             services.AddMvc();
         }
 

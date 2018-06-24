@@ -1,2 +1,0 @@
-SourceEmail,SourceServer,SourcePassword,SourceSsl,SourcePort,DestinyEmail,DestinyServer,DestinyPassword,DestinyUseSsl,DestinyPort
-source@example.com,imap.example.com,P4ssW0rd,false,143,destiny@example.com,imap.destiny.com,S3cuReP4ssw0rd,true,993

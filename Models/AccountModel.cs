@@ -4,7 +4,7 @@ namespace mail_migration.Models
 {
     public class AccountModel
     {
-        private CryptModel crypt = new CryptModel();
+        private static CryptModel crypt = new CryptModel();
 
         public string mail { get; set; }
         public string password { get; set; }
@@ -15,12 +15,12 @@ namespace mail_migration.Models
             this.password = password;
         }
 
-        public void encryptPassword(){
-            this.password =  crypt.RSAencrypt(this.password);
+        public static String encryptPassword(String password){
+            return  crypt.RSAencrypt(password);
         }
 
-        public void descryptPassword(){
-            this.password =  crypt.RSAdescrypt(this.password);
+        public static String descryptPassword(String password){
+           return crypt.RSAdescrypt(password);
         }
 
 

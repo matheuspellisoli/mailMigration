@@ -12,10 +12,6 @@ namespace mail_migration.Controllers
     {
         public IActionResult Index()
         {
-            
-            
-          
-
             return View();
         }
 

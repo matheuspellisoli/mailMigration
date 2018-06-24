@@ -1,4 +1,4 @@
-const acoounts = [];
+const accounts = [];
 
 var provider = {};
 
@@ -35,51 +35,6 @@ const providers = [
 	}
 ]
 
-const errors = {
-	"elements":[
-		"accountSource",
-		"accountDestiny", 
-		"passwordSource",
-		"passwordDestiny",
-		"provider",
-	],
-
-	"accountSource": {
-		"message" : "Digite um e-mail de origem valida",
-		"activated" : false,
-		"erroLabel": "accountError"
-	},
-	"accountDestiny":{
-		"message" : "Digite um e-mail de destino valida",
-		"activated" : false,
-		"erroLabel": "accountError"
-	},
-	"passwordSource":{
-		"message" : "Digite uma senha para e-mail de origem",
-		"activated" : false,
-		"erroLabel": "accountError"
-	}	,
-	"passwordDestiny":{
-		"message" : "Digite uma senha para e-mail de destino",
-		"activated" : false,
-		"erroLabel": "accountError"
-	},
-	"provider": [
-		{"message" : "Selecione um provedor.",
-		"activated" : false,
-		"erroLabel": "severError"},
-		{
-		"message" : "Selecione um provedor.",
-		"activated" : false,
-		"erroLabel": "severError"
-		}
-	]
-	
-	
-}
-
-
-
 $(document).ready(function($) {
 	providers.forEach(item => {
 		$("#provider").append(new Option(item.name,providers.indexOf(item)));
@@ -94,50 +49,6 @@ function isEmpty(value) {
 	}
 
 	return false;
-}
-
-function setErro(element){
-	var message = "";
-	var isError = false
-	errors.elements.forEach(input => {
-		if(errors[input].activated){
-			if(message != ""){
-				message = message + "<br>" + errors[input].message;
-			}else{
-				message = errors[input].message;
-			}
-			$("#"+input).addClass("erroPers");
-			isError = true;
-		}else{
-			$("#"+input).removeClass("erroPers");	
-		}
-
-	if(isError){
-		$("#"+element).empty();
-		$("#"+element).removeClass("hide");
-		$("#"+element).append(message);	
-	}else{
-		$("#"+element).empty();
-		$("#"+element).addClass("hide");		
-	} 
-	});
-
-	
-}
-
-function validMail(id) {
-
-	var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-	
-	if (reg.test($("#"+id).val())){		
-		errors[id].activated = false;
-		setErro("accountError");
-		return false;
-	}else{
-		errors[id].activated = true;
-		setErro("accountError");
-		return false;
-	}
 }
 
 function validPassword(id){
@@ -160,35 +71,6 @@ function validOther(id) {
 	}
 }
 
-function validAcoount() {	
-	var isValid = false;
-	if(validMail("accountSource")){
-		isValid =  true;
-	}else{
-		isValid = false;
-	}
-	
-	if(validMail("passwordDestiny")){
-		isValid =  true;
-	}else{
-		isValid = false;
-	}
-
-	if(validPassword("accountDestiny")){
-		isValid =  true;
-	}else{
-		isValid = false;
-	}
-
-	if(validPassword("passwordSource")){
-		isValid =  true;
-	}else{
-		isValid = false;
-	}
-	
-	return isValid;
-	
-}
 
 function addAcoount() {
 	var accountSource = $("#accountSource").val();
@@ -196,29 +78,18 @@ function addAcoount() {
 	var  accountDestiny = $("#accountDestiny").val();
 	var  passwordDestiny = $("#passwordDestiny").val();
 	
-	if(!validAcoount()){
-		
-		if(acoounts.length <= 0){
-			$( "#accountList" ).empty();	
-		}
-		
-		acoounts.push( 
-			{
-				"accountSource" : accountSource,
-				"passwordSource": passwordSource,
-				"accountDestiny": accountDestiny,
-				"passwordDestiny" : passwordDestiny
-			})	
-
-			let html = "<tr id='account" +acoounts.length+"'> <td>"+accountSource+"</td> <td>"+passwordSource+"</td> <td>"+accountDestiny+"</td> <td>"+passwordDestiny+"</td> <td><a  href='javascript:edit("+(acoounts.length)+");'>	<img src='/images/edit.svg' style='height: 20px'></a></td></td> <td><a  href='javascript:remove("+(acoounts.length)+");'>	<img src='/images/garbage.svg' style='height: 20px'></a></td></tr>";
-			$('#account').bind('click', false);
-			$( "#accountList" ).append( html );
-			$("#accountSource").val("");
-			$("#passwordSource").val("");
-			$("#accountDestiny").val("");
-			$("#passwordDestiny").val("");
-			$("#accountSource").focus();
-	}
+	accounts.push( 
+		{
+			"accountSource" : accountSource,
+			"passwordSource": passwordSource,
+			"accountDestiny": accountDestiny,
+			"passwordDestiny" : passwordDestiny
+		})	
+		$("#accountSource").val("");
+		$("#passwordSource").val("");
+		$("#accountDestiny").val("");
+		$("#passwordDestiny").val("");
+		$("#accountSource").focus();
 }
 
 function remove(number){
@@ -346,9 +217,6 @@ function loadData() {
 		return 0;	
 	}
 
-	if(false){
-		return 0;
-	}
 	
 	jQuery.noConflict();
     $("#myModal").modal();

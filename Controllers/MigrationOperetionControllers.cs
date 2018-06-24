@@ -19,14 +19,28 @@ namespace mail_migration.Controllers
     }
     
     [HttpGet]
-    public IActionResult GetAllMigration(){   
-        
+    public IActionResult GetAllMigration([FromHeader] string key){   
+        if(key == null){
+            return StatusCode(401);
+        }
+        if(!UserModel.isLogged(key)){
+            return StatusCode(401);
+        }
+
         return new ObjectResult(MigrationOperetionModel.getAllMigration());
         
     }
 
     [HttpGet("{id}/")]
-    public IActionResult getMigration(int id){   
+    
+    public IActionResult getMigration([FromHeader] string key, int id){   
+
+        if(key == null){
+            return StatusCode(401);
+        }
+        if(!UserModel.isLogged(key)){
+            return StatusCode(401);
+        }
 
         if(id.Equals(null)) return StatusCode(500);
 
@@ -36,36 +50,63 @@ namespace mail_migration.Controllers
        
     }
 
-
-
-
-
-    [Produces("application/json")]
-    
-    [HttpPost]        
-    public ActionResult AddMigration([FromBody]  MigrationOperetionModel obj)
-    {        
-            if(obj == null) return StatusCode(500);
-            obj.encryptPasswordAccounts();
-            MigrationOperetionModel.insertMigration(obj);
-
-            obj.descryptPasswordAccounts();
-        return new ObjectResult(obj);
-    }
-
-        [HttpGet("csv/{id}/")]    
-        public FileContentResult Download(int id)
+    [HttpGet("csv/{id}/")]    
+    public IActionResult getCsv([FromHeader] string key, int id)
     {
-        MigrationOperetionModel b = MigrationOperetionModel.getMigration(id);
 
-        string csvContent = b.generetionCSV();
+        if(key == null){
+            return StatusCode(401);
+        }
+        if(!UserModel.isLogged(key)){
+            return StatusCode(401);
+        }
+
+        MigrationOperetionModel migration = MigrationOperetionModel.getMigration(id);
+
+        // if(true){
+        //    return BadRequest(500);       
+        // }
+        
+        string csvContent = migration.generetionCSV();
         var data = Encoding.UTF8.GetBytes(csvContent);
-        string filename = b.domain +".csv";
+        string filename = migration.domain +".csv";
         string mime = "text/csv";
         return File(data, mime, filename);
     }
 
+    [Produces("application/json")]
+    
+    [HttpPost]        
+    public ActionResult addMigration(MigrationOperetionModel obj)
+    {        
+            if(obj == null) return StatusCode(500);
+            obj.encryptPasswordAccounts();
+            MigrationOperetionModel.saveMigration(obj);
 
+        return new ObjectResult(obj);
+    }
+
+    [HttpPut("{id}/")]        
+    public ActionResult updateMigrationSeverDetiny(int id,[FromHeader] string key, [FromBody]  ServerModel obj)
+    {        
+
+            if(key == null){
+                return StatusCode(401);
+            }
+            if(!UserModel.isLogged(key)){
+                return StatusCode(401);
+            }
+
+            if(obj == null) return StatusCode(501);
+            
+            MigrationOperetionModel _migration = MigrationOperetionModel.getMigration(id);
+
+            _migration.serverDestinyIMAP = obj;
+
+            MigrationOperetionModel.updateMigration(_migration);        
+
+        return new ObjectResult(_migration);
+    }
     
     }
 }

@@ -4,7 +4,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-
+using mail_migration;
 namespace mail_migration.Models
 
 {
@@ -12,37 +12,37 @@ namespace mail_migration.Models
     {
        
      
-        private IMongoClient _client;
-        private IMongoDatabase _database;
-        private IMongoCollection<MigrationOperetionModel> _collection;
-
+       private IMongoCollection<MigrationOperetionModel> _collection; 
+       private Databaseconfirmation conn = new Databaseconfirmation();
         public MigrationDAO()
         {
-            _client = new MongoClient("mongodb://DBUserMigration:e2SW3!hX@ds263670.mlab.com:63670/migration");
-            _database = _client.GetDatabase("migration");
-            _collection = _database.GetCollection<MigrationOperetionModel>("DBmigration");
+            _collection = conn.getDatabase().GetCollection<MigrationOperetionModel>("DBmigration");
+           
         }
 
+        public void saveMigration(MigrationOperetionModel migration)
+        {   
 
-            public void insertMigration(MigrationOperetionModel migration)
-            {   
-                
-                    _collection.InsertOne(migration);
+            _collection.InsertOne(migration);
 
-            }
+        }
+         public void updateMigration(MigrationOperetionModel migration){
+            var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", migration.idMigration);
+            _collection.ReplaceOne(filter, migration);
+        }
+
+        public MigrationOperetionModel getMigration(int idMigration){
+
+            var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", idMigration);
             
-            public MigrationOperetionModel getMigration(int idMigration){
+            return _collection.Find(filter).Single();
+        }
 
-                var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", idMigration);
-                
-                return _collection.Find(filter).Single();
-            }
-
-            public List<MigrationOperetionModel> getAllMigration()
-            {
-                var list =  _collection.Find(new BsonDocument()).ToList();
-                
-                return list;
+        public List<MigrationOperetionModel> getAllMigration()
+        {
+            var list =  _collection.Find(new BsonDocument()).ToList();
+            
+            return list;
         } 
        
 
