@@ -45,3 +45,13 @@
     position: fixed !important;
     margin-top: 0 !important;
 }
+
+input.error {
+    border-color: #ff1a1a;
+    margin-bottom: 0px;
+}
+
+p.error {
+   font-size: 10px;
+    color: #ff1a1a;
+}

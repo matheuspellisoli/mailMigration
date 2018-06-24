@@ -1,11 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="offset1"></div>
-<div class="alert alert-error soft span8  margin-no" id="severError">      
-  Selecione um provedor.
-</div>
-
 
 <div class="row span12">
   <section id="parallax" class="pad-medium-v" data-stellar-background-ratio="0.2" style="background: url(images/banner.png)"> 
@@ -51,8 +46,13 @@
 </div>
 <div class="row span12 control">
   <label>Contas de e-mail a serem migradas.</label>
-  
-    <input type="text" id="accountSource" placeholder="E-mail de origem" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small">
+    
+    <!-- <div>
+      <input type="text" id="accountSource" placeholder="E-mail de origem" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small error">
+      <p class="error">Digite um e-mail de destino valida</p>
+    </div>
+     -->
+    <input type="text" id="accountSource" placeholder="E-mail de origem" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small error">    
     <input type="password" id="passwordSource"  placeholder="Senha do e-mail" oninput="javascript:validPassword($(this).attr('id'));" class="span2 margin-small">   
     <input type="text" id="accountDestiny" placeholder="E-mail de destino" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small" >
     <input type="password" id="passwordDestiny" placeholder="Senha do e-mail" onchange="javascript:validPassword($(this).attr('id'));" class="span2 margin-small">
@@ -84,7 +84,12 @@
   </table>
 
             
-
+<!-- <div class="row col-md-12">
+  <div>
+    <input class="error" type="text"/>
+    <p class="error">entrada de invalida</p>
+  </div>
+</div> -->
 </div>
 <p></p>
 

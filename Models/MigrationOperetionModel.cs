@@ -36,7 +36,7 @@ namespace mail_migration.Models
              return conn.getMigration(idMigration);
          }
           public static void insertMigration(MigrationOperetionModel migration)
-        {               
+        {                
              conn.insertMigration(migration);
         }
 
@@ -51,6 +51,22 @@ namespace mail_migration.Models
            
             return csv;
         
+        }
+
+        public void encryptPasswordAccounts(){
+            foreach (accountSourceAndAccountDestinyModel accounts in accounts)
+            {
+                accounts.accountDestiny.encryptPassword();
+                accounts.accountSource.encryptPassword();
+            }
+        }
+
+        public void descryptPasswordAccounts(){
+            foreach (accountSourceAndAccountDestinyModel accounts in accounts)
+            {
+                accounts.accountDestiny.descryptPassword();
+                accounts.accountSource.descryptPassword();
+            }
         }
 
 

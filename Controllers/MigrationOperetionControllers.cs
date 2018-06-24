@@ -25,10 +25,10 @@ namespace mail_migration.Controllers
         
     }
 
-    [HttpGet("get")]
+    [HttpGet("{id}/")]
     public IActionResult getMigration(int id){   
 
-        if(id == null) return StatusCode(500);
+        if(id.Equals(null)) return StatusCode(500);
 
         MigrationOperetionModel b = MigrationOperetionModel.getMigration(id);
 
@@ -36,19 +36,24 @@ namespace mail_migration.Controllers
        
     }
 
+
+
+
+
     [Produces("application/json")]
     
     [HttpPost]        
     public ActionResult AddMigration([FromBody]  MigrationOperetionModel obj)
     {        
             if(obj == null) return StatusCode(500);
-
+            obj.encryptPasswordAccounts();
             MigrationOperetionModel.insertMigration(obj);
 
+            obj.descryptPasswordAccounts();
         return new ObjectResult(obj);
     }
 
-        [HttpGet("csv")]    
+        [HttpGet("csv/{id}/")]    
         public FileContentResult Download(int id)
     {
         MigrationOperetionModel b = MigrationOperetionModel.getMigration(id);
@@ -65,4 +70,3 @@ namespace mail_migration.Controllers
     }
 }
 
- 
