@@ -1,9 +1,42 @@
 ﻿@model ErrorViewModel
 @{
     ViewData["Title"] = "Error";
+     Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mail_migration</title>
 
-<h1 class="text-danger">Error.</h1>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" />        
+    </environment>
+    
+    <environment exclude="Development">
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />     
+        <link rel="stylesheet" href="~/css/site.css"  asp-append-version="true" />     
+    </environment>
+</head>
+<body>
+
+  <nav class="navbar  navbar-fixed-top">
+        <div class="container"> 
+            <a href="/" class="navbar-brand mb-0 d-flex">
+                    <img src="/images/logo-redehost.svg" class="logo" alt="RedeHost">
+            </a>  
+      
+        </div>
+</nav>
+
+     <div class="container body-content ">
+
+         <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
 @if (Model.ShowRequestId)
@@ -20,3 +53,20 @@
 <p>
     <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
 </p>
+         
+
+     </div>
+        <hr>
+        <footer class="text-center">
+            <p class="margin-small">&copy; 2018 Todos direitos reservados.Política de privacidade</p>
+        </footer>
+    </div>
+
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="lib/jquery/dist/jquery.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

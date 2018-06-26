@@ -40,6 +40,14 @@ namespace mail_migration
 
             app.UseStaticFiles();
 
+             app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "login/{action=Login}");
+
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

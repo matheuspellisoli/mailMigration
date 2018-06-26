@@ -8,19 +8,22 @@ namespace mail_migration.Models
 
         public string mail { get; set; }
         public string password { get; set; }
-        
 
-        public AccountModel(string mail, string password){
+
+        public AccountModel(string mail, string password)
+        {
             this.mail = mail;
             this.password = password;
         }
 
-        public static String encryptPassword(String password){
-            return  crypt.RSAencrypt(password);
+        public static String encryptPassword(String password)
+        {
+            return crypt.RSAencrypt(password);
         }
 
-        public static String descryptPassword(String password){
-           return crypt.RSAdescrypt(password);
+        public static String descryptPassword(String password)
+        {
+            return crypt.RSAdescrypt(password);
         }
 
 

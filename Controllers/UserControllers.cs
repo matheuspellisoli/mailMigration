@@ -19,14 +19,14 @@ namespace mail_migration.Controllers
     }
     
     [HttpGet("/{id}/")]
-    public IActionResult getUser(){   
+    public IActionResult getUser(){ 
         
         return new ObjectResult(null);
         
     }
 
-     [HttpPost("login")]
-    public IActionResult loginUser([FromHeader] string key, [FromBody] UserModel user){
+    [HttpPost("login")]
+    public IActionResult loginUser([FromBody] UserModel user){
 
         var result =UserModel.login(user.mail, user.password); 
 
@@ -35,6 +35,16 @@ namespace mail_migration.Controllers
         }
       
         return new ObjectResult(result);       
+    }
+
+    [HttpPost("islogin")]
+    public IActionResult isloginUser([FromHeader] String key){
+        
+        if(UserModel.isLogged(key)){
+            return StatusCode(202);
+        }else{
+            return StatusCode(403);
+        }
     }
 
     [HttpPost("logout")]
@@ -57,8 +67,6 @@ namespace mail_migration.Controllers
                 return BadRequest("usuário já existe");
             }
     }
-
-
     
     }
 }

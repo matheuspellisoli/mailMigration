@@ -1,0 +1,114 @@
+@{ ViewData["Title"] = "Home Page"; Layout = null; }
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mail_migration</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+</head>
+
+<body>
+
+    <nav class="navbar  navbar-fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand mb-0 d-flex">
+                    <img src="/images/logo-redehost.svg"  class="logo" alt="RedeHost">
+            </a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="https://who.is/" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-envelope-o"></i> Whois
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://mxtoolbox.com/" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-cog"></i>MX Tool Box
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container body-content ">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Domínio</th>
+                    <th>Data</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listView">
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <footer class="text-center">
+        <p class="margin-small">&copy; 2018 Todos direitos reservados.Política de privacidade</p>
+    </footer>
+    </div>
+
+    <div id="myModal" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-body" style="max-height: 300px;">
+            <h4>
+                Informe o servidor de destino.
+            </h4>
+            <P id="domain"></P>
+            <P id="NumberAccounts"></P>
+            <P id="StatusMigrartion"></P>
+            <div class="">
+                <label>Servidor de IMAP</label>
+                <input type="text" id="ServerHost" onchange="javascript:serverProvider()" class="span3">
+            </div>
+            <div class="">
+                <label>Porta de IMAP</label>
+                <input type="text" id="ServerPort" onchange="javascript:serverProvider()" class="span2">
+            </div>
+            <div class="">
+                <label>SSL</label>
+                <select name="ServerSSL" id="ServerSSL" onchange="javascript:serverProvider()">
+            <option value="0" selected disabled hidden>SSL</option>   
+            <option value="true">Tem SSL </option> 
+            <option value="false" >Não tem SSL </option>    
+        </select>
+            </div>
+            <label>Status</label>
+            <select name="Status" id="status" onchange="">
+            <option value="1" selected>Em andamento</option> 
+            <option value="2" >Concluído</option>    
+        </select>
+        </div>
+
+        <div id="modalFooter" class="modal-footer">
+
+        </div>
+    </div>
+    </div>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="http://localhost:5000/lib/jquery/dist/jquery.min.js"></script>
+    <script src="http://localhost:5000/js/main.js"></script>
+    <script src="http://localhost:5000/js/admin.js"></script>
+
+
+    </script>
+</body>
+
+</html>

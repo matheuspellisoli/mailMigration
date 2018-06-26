@@ -1,162 +1,224 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; Layout = null; }
+<!DOCTYPE html>
+<html>
 
-<div class="row span12">
-  <section id="parallax" class="pad-medium-v" data-stellar-background-ratio="0.2" style="background: url(images/banner.png)"> 
-        <div class="container relative" >        
-          <h1 class="stronger sizexx text-center text-photo">Migração de e-mail</h1>                 
-          </div>
-  </section>
-</div>  
-<div class="row span12">
-  <p></p>
-  <p>Bem-vindo ao processo para solicitar a migração de seus e-mails. Serão necessárias algumas informações.</p>
-</div>
-<div class="row  span12">
-  <label>Selecione o provedor onde estão seus e-mails.</label>
-  <select name="hall" id="provider" onchange="javascript:serverProvider();" class="margin-small-v" onchange="">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - mail_migration</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+
+    <environment exclude="Development">
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+</head>
+
+<body>
+
+    <nav class="navbar  navbar-fixed-top">
+        <div class="container">
+            <a href="/" class="navbar-brand mb-0 d-flex">
+                    <img src="/images/logo-redehost.svg" class="logo" alt="RedeHost">
+            </a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="https://webmail.redehost.com.br/" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-envelope-o"></i> Webmail
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://painel.redehost.com.br/Login.aspx" target="_blank" class="nav-link text-primary">
+                        <i class="fa fa-cog"></i>Painel
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container body-content ">
+        <div class="row span12">
+            <section id="parallax" class="pad-medium-v" data-stellar-background-ratio="0.2" style="background: url(images/banner.png)">
+                <div class="container relative">
+                    <h1 class="stronger sizexx text-center text-photo">Migração de e-mail</h1>
+                </div>
+            </section>
+        </div>
+        <div class="row span12">
+            <p></p>
+            <p>Bem-vindo ao processo para solicitar a migração de seus e-mails. Serão necessárias algumas informações.</p>
+        </div>
+        <div class="row  span12">
+            <label>Selecione o provedor onde estão seus e-mails.</label>
+            <select name="hall" id="provider" onchange="javascript:serverProvider();" class="margin-small-v" onchange="">
       <option value="null" selected disabled hidden>Selecione um provedor</option>
       
   </select>
-</div> 
-<div id="ServerOther" class="row span12 hide  margin-no">
-  
-    <div class="span3">
-    <label>Servidor de IMAP</label>
-    <input type="text" id="ServerOtherHost" onchange="javascript:serverProvider();" class="span3 margin-small">
-    </div>
-    <div class="span2">
-    <label>Porta de IMAP</label>
-    <input type="text" id="ServerOtherPort" onchange="javascript:serverProvider();"  class="span2 margin-small">
-    </div>
-    <div class="span3">
-    <label>SSL</label>    
-   <select name="ServerOtherSSL" id="ServerOtherSSL" onchange="javascript:serverProvider();" class="margin-small-v" onchange="">
+        </div>
+        <div id="ServerOther" class="row span12 hide  margin-no">
+
+            <div class="span3">
+                <label>Servidor de IMAP</label>
+                <input type="text" id="ServerOtherHost" onchange="javascript:serverProvider();" class="span3 margin-small">
+            </div>
+            <div class="span2">
+                <label>Porta de IMAP</label>
+                <input type="text" id="ServerOtherPort" onchange="javascript:serverProvider();" class="span2 margin-small">
+            </div>
+            <div class="span3">
+                <label>SSL</label>
+                <select name="ServerOtherSSL" id="ServerOtherSSL" onchange="javascript:serverProvider();" class="margin-small-v" onchange="">
       <option value="0" selected disabled hidden>SSL</option>   
       <option value="true">Tem SSL </option> 
       <option value="false" >Não tem SSL </option>    
-  </select>    
-    </div>  
-</div>
-<div class="row span12">
-<div class="alert alert-error soft span4 margin-no hide" id="severError">      
-  Selecione um provedor.
-</div>
-</div>
-<div class="row span12 control">
-  <label>Contas de e-mail a serem migradas.</label>
-    
-    <!-- <div>
+  </select>
+            </div>
+        </div>
+        <div class="row span12">
+
+            <div class="span12 margin-no hide" id="severError">
+                <p class="error">Selecione um provedor.</p>
+            </div>
+        </div>
+        <div class="row span12 control">
+            <label>Contas de e-mail a serem migradas.</label>
+
+            <!-- <div>
       <input type="text" id="accountSource" placeholder="E-mail de origem" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small error">
       <p class="error">Digite um e-mail de destino valida</p>
     </div>
      -->
-    <input type="text" id="accountSource" placeholder="E-mail de origem"  class="span4 margin-small error">    
-    <input type="password" id="passwordSource"  placeholder="Senha do e-mail" class="span2 margin-small error">   
-    <input type="text" id="accountDestiny" placeholder="E-mail de destino"  class="span4 margin-small error" >
-    <input type="password" id="passwordDestiny" placeholder="Senha do e-mail" class="span2 margin-small error">
-    <div class="alert alert-error soft hide " id="accountError">      
-    </div>
-   
-    <div id="menuAccount" class="margin-no cadastro">
-      <div class="span3 offset9">
-        <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
-      </div> 
-    </div>
-</div>
+            <input type="text" id="accountSource" placeholder="E-mail de origem" class="span4 margin-small ">
 
-<div class="row span12">
- 
- <table  class="table table-striped">
-      <thead>
-          <tr>
-            <th>E-mail de origem</th>
-            <th>Senha</th>
-            <th>E-mail de destino</th>
-            <th>Senha</th>
-            <th></th>
-            </tr>
-      </thead>
-      <tbody id="accountList">
-        <tr> <td id="accountListNull" style="text-align: center" colspan='6'>Nenhuma conta cadastrada</td></tr>
-      </tbody>
-  </table>
+            <input type="password" id="passwordSource" placeholder="Senha do e-mail" class="span2 margin-small ">
 
-            
-<!-- <div class="row col-md-12">
-  <div>
-    <input class="error" type="text"/>
-    <p class="error">entrada de invalida</p>
-  </div>
-</div> -->
-</div>
-<p></p>
+            <input type="text" id="accountDestiny" placeholder="E-mail de destino" class="span4 margin-small ">
 
-<div class="row  span12">
-   <label>Durante o processo seu serviço de e-mail pode ficar indisponível por até 4 horas. Escolha uma um horário para a migração.</label>
-   
-  <form id="formSchedule">
-    <label class="radio">
+            <input type="password" id="passwordDestiny" placeholder="Senha do e-mail" class="span2 margin-small ">
+            <p id="accountError" class="error hide">Verifique se os campos em vermelho estão corretos.</p>
+            <div class="alert alert-error soft hide " id="">
+            </div>
+
+            <div id="menuAccount" class="margin-no cadastro">
+                <div class="span3 offset9">
+                    <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row span12">
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>E-mail de origem</th>
+                        <th>Senha</th>
+                        <th>E-mail de destino</th>
+                        <th>Senha</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="accountList">
+                    <tr>
+                        <td id="accountListNull" style="text-align: center" colspan='6'>Nenhuma conta cadastrada</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="span12 margin-no hide" id="AccountsTableError">
+                <p class="error">Para migrar é necessário ter pelo menos 1 conta.</p>
+            </div>
+
+        </div>
+        <p></p>
+
+        <div class="row  span12">
+            <label>Durante o processo seu serviço de e-mail pode ficar indisponível por até 4 horas. Escolha uma um horário para a migração.</label>
+
+            <form id="formSchedule">
+                <label class="radio ">
     <input type="radio" name="dateAndTime" value="null" onclick="javascript:dateAndTimeSchedule();">
     A qualquer momento
   </label>
-  <label class="radio">
+                <label class="radio">
     <input type="radio" name="dateAndTime" value="schedule" onclick="javascript:dateAndTimeSchedule();">
     Agendar um horário
   </label>
-  </form>
+            </form>
 
-  <div id="dateAndTimeSchedule" class="hide margin-small-t">
-      <label >Informe um horário:</label>
-      <input type="date" class="span2" onchange="javascript:dateAndTimeSchedule();" id="scheduleDate">
-      <input type="time" class="span2"  onchange="javascript:dateAndTimeSchedule();" id="scheduleTime">  
-      
-  </div>
-</div>
-<div class="row  span12   margin-small-t ">
-  <div class="span3 offset9">
-      <a class="span2 btn btn-primary pull-left" id="modalBTN"  onclick="javascript:loadData()">Concluir</a>
+            <div id="dateAndTimeSchedule" class="hide margin-small-t">
+                <label>Informe um horário:</label>
+                <input type="date" class="span3" onchange="javascript:dateAndTimeSchedule();" id="scheduleDate">
+                <input type="time" class="span2" onchange="javascript:dateAndTimeSchedule();" id="scheduleTime">
+
+            </div>
+            <div class="span12 margin-no hide" id="dateAndTimeScheduleError">
+                <p class="error">Selecione o horário.</p>
+            </div>
+        </div>
+        <div class="row  span12   margin-small-t ">
+            <div class="span3 offset9">
+                <a class="span2 btn btn-primary pull-left" id="modalBTN" onclick="javascript:loadData()">Concluir</a>
+            </div>
+        </div>
     </div>
-</div>
-</div>
 
-<!-- data-toggle="modal" href="#myModal" -->
+    <!-- data-toggle="modal" href="#myModal" -->
 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-        
+    <div id="myModal" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="modal-body" style="max-height: 300px;">
+            <h4>Antes da solicitação ser enviada confirme os dados abaixo:</h4>
+            <p id="nameProviderView"></p>
+            <P id="severProviderView"></P>
+            <P id="portProviderView"></P>
+            <p id="sslProviderView"></p>
+            <P>Contas de e-mail a serem migradas.</P>
+            <div style="overflow: auto">
+                <table class="table table-striped" style="max-width: 400px overflow-y: auto;">
+                    <thead>
+                        <tr>
+                            <th>E-mail de origem</th>
+                            <th>Senha</th>
+                            <th>E-mail de destino</th>
+                            <th>Senha</th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tbody id="accountListView">
+                    </tbody>
+                </table>
+            </div>
+
+            <p id="dateAndTime"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:closeModal();" class="btn btn">Editar</a>
+            <a href="javascript:enviar();" class="btn btn-primary">Enviar solicitação</a>
+
+        </div>
     </div>
-    <div class="modal-body">
-      <h3>Antes da solicitação ser enviada confirme os dados abaixo:</h3>
-      <p>Provedor 1</p>
-      <P>Servidor IMAP: imap.provedor.com</P>
-      <P>Porta IMAP: 143</P>
-      <p>SSL: False</p>
-      <P>Contas de e-mail a serem migradas.</P>
-       <table  class="table table-striped">
-        <thead>
-            <tr>
-              <th>E-mail de origem</th>
-              <th>Senha</th>
-              <th>E-mail de destino</th>
-              <th>Senha</th>
-              <th></th>
-              </tr>
-        </thead>
-        <tbody id="accountListView">
-        </tbody>
-      </table>
-      <p>Horário: 22/05/2018 18:00</p>   
+
+    <hr>
+    <footer class="text-center">
+        <p class="margin-small">&copy; 2018 Todos direitos reservados.Política de privacidade</p>
+    </footer>
     </div>
-    <div class="modal-footer">
-      <a href="javascript:void(0);" class="btn btn">Editar</a>
-      <a href="javascript:void(0);" class="btn btn-primary">Enviar solicitação</a>
-      
-    </div>
-</div>
 
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="js/main.js"></script>
 
+</body>
 
+</html>

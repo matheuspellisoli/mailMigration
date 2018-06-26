@@ -10,41 +10,43 @@ namespace mail_migration.Models
 {
     public class MigrationDAO
     {
-       
-     
-       private IMongoCollection<MigrationOperetionModel> _collection; 
-       private Databaseconfirmation conn = new Databaseconfirmation();
+
+
+        private IMongoCollection<MigrationOperetionModel> _collection;
+        private Databaseconfirmation conn = new Databaseconfirmation();
         public MigrationDAO()
         {
             _collection = conn.getDatabase().GetCollection<MigrationOperetionModel>("DBmigration");
-           
+
         }
 
         public void saveMigration(MigrationOperetionModel migration)
-        {   
+        {
 
             _collection.InsertOne(migration);
 
         }
-         public void updateMigration(MigrationOperetionModel migration){
+        public void updateMigration(MigrationOperetionModel migration)
+        {
             var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", migration.idMigration);
             _collection.ReplaceOne(filter, migration);
         }
 
-        public MigrationOperetionModel getMigration(int idMigration){
+        public MigrationOperetionModel getMigration(int idMigration)
+        {
 
             var filter = Builders<MigrationOperetionModel>.Filter.Eq("idMigration", idMigration);
-            
+
             return _collection.Find(filter).Single();
         }
 
         public List<MigrationOperetionModel> getAllMigration()
         {
-            var list =  _collection.Find(new BsonDocument()).ToList();
-            
+            var list = _collection.Find(new BsonDocument()).ToList();
+
             return list;
-        } 
-       
+        }
+
 
     }
 }

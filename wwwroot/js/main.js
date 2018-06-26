@@ -1,4 +1,3 @@
-const accounts = [];
 
 var provider = {};
 
@@ -6,98 +5,225 @@ const providers = [
 	{
 		"name": "RedeHost",
 		"host": "mail.redehost.com.br",
-		"port": 143,
-		"ssl": false 
+		"port": "143",
+		"ssl": false
 	},
 	{
 		"name": "Google",
 		"host": "imap.google.com",
-		"port": 993,
-		"ssl": true 
+		"port": "993",
+		"ssl": true
 	},
 	{
-		"name": "LocalWeb",
+		"name": "LocaWeb",
 		"host": "email-ssl.com.br",
-		"port": 993,
-		"ssl": true 
+		"port": "993",
+		"ssl": true
 	},
 	{
 		"name": "kingHost",
 		"host": "imap.kinghost.net",
-		"port": 993,
-		"ssl": true 
+		"port": "993",
+		"ssl": true
 	},
 	{
 		"name": "Godaddy",
 		"host": "imap.secureserver.net",
-		"port": 993,
-		"ssl": true 
+		"port": "993",
+		"ssl": true
 	}
 ]
 
-$(document).ready(function($) {
+var migration = {
+	accounts: [],
+	idMigration: 0,
+	domain: "",
+	serverSourceIMAP: {},
+	serverDestinyIMAP: null,
+	dateAndTime: ""
+}
+
+$("#passwordSource").focusin(function () {
+	$("#passwordSource").attr("type", "text");
+});
+
+$("#passwordSource").focusout(function () {
+	$("#passwordSource").attr("type", "password");
+});
+
+$("#passwordDestiny").focusin(function () {
+	$("#passwordDestiny").attr("type", "text");
+});
+
+$("#passwordDestiny").focusout(function () {
+	$("#passwordDestiny").attr("type", "password");
+});
+
+
+function closeModal() {
+	$('#myModal').modal('hide');
+}
+
+$(document).ready(function ($) {
 	providers.forEach(item => {
-		$("#provider").append(new Option(item.name,providers.indexOf(item)));
+		$("#provider").append(new Option(item.name, providers.indexOf(item)));
 	});
 	$("#provider").append(new Option("Outro", "Outro"));
-  });
 
+
+	renderTable();
+
+
+});
 
 function isEmpty(value) {
-	if(value == "" || value == null){
+	if (value == "" || value == null) {
 		return true;
 	}
 
 	return false;
 }
 
-function validPassword(id){
+function validPassword(value) {
 
-	if(	isEmpty($("#"+id).val())){
-		errors[id].activated = true;
-		setErro("accountError");
+	if (isEmpty(value)) {
+
 		return true;
-		}
-
-		errors[id].activated = false;
-		setErro("accountError");
-		return false;
-		
-}
-
-function validOther(id) {
-	if(isEmpty($("#"+id).val())){
-		setErro("severError")
 	}
+	return false;
+
 }
 
+function maskString(value) {
+	var newValue = "";
+	for (let i = 0; i < value.length; i++) {
+		newValue = newValue + "*";
+	}
+	return newValue;
+}
 
+function renderTable() {
+
+	$("#accountList").empty();
+	migration.accounts.forEach((account, index) => {
+		let html = "<tr id='account" + index + "'> <td>" + account.accountSource.mail + "</td> <td>" + maskString(account.accountSource.password) + "</td> <td>" + account.accountDestiny.mail + "</td> <td>" + maskString(account.accountDestiny.password) + "</td> <td><a  href='javascript:edit(" + (index) + ");'>	<img src='/images/edit.svg' style='height: 20px'></a></td></td> <td><a  href='javascript:remove(" + index + ");'>	<img src='/images/garbage.svg' style='height: 20px'></a></td></tr>";
+		$("#accountList").append(html);
+	});
+}
+function renderTableViwer() {
+
+	$("#accountListView").empty();
+	migration.accounts.forEach((account, index) => {
+		let html = "<tr id='account" + index + "'> <td>" + account.accountSource.mail + "</td> <td>" + maskString(account.accountSource.password) + "</td> <td>" + account.accountDestiny.mail + "</td> <td>" + maskString(account.accountDestiny.password) + "</td> </tr>";
+		$("#accountListView").append(html);
+	});
+}
+function validAcoount(accountSource, passwordSource, accountDestiny, passwordDestiny) {
+	var valid = true;
+	var reg = /^(\w+([-+.']\w+)*)@(\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
+
+	if (validPassword(passwordSource.val())) {
+		valid = false;
+		passwordSource.addClass("erroPers");
+	} else {
+		passwordSource.removeClass("erroPers");
+	}
+
+	if (validPassword(passwordDestiny.val())) {
+		valid = false;
+		passwordDestiny.addClass("erroPers");
+	} else {
+		passwordDestiny.removeClass("erroPers");
+	}
+	if (!reg.test(accountSource.val())) {
+		valid = false;
+		accountSource.addClass("erroPers");
+	} else {
+		accountSource.removeClass("erroPers");
+	}
+	if (!reg.test(accountDestiny.val())) {
+		valid = false;
+		accountDestiny.addClass("erroPers");
+	} else {
+		accountDestiny.removeClass("erroPers");
+	}
+
+	if (!valid) {
+		$("#accountError").removeClass("hide");
+	} else {
+		$("#accountError").addClass("hide");
+	}
+
+	return valid;
+
+}
 function addAcoount() {
-	var accountSource = $("#accountSource").val();
-	var passwordSource = $("#passwordSource").val();
-	var  accountDestiny = $("#accountDestiny").val();
-	var  passwordDestiny = $("#passwordDestiny").val();
-	
-	accounts.push( 
-		{
-			"accountSource" : accountSource,
-			"passwordSource": passwordSource,
-			"accountDestiny": accountDestiny,
-			"passwordDestiny" : passwordDestiny
-		})	
+	var accountSource = $("#accountSource")
+	var passwordSource = $("#passwordSource")
+	var accountDestiny = $("#accountDestiny")
+	var passwordDestiny = $("#passwordDestiny")
+
+
+	if (validAcoount(accountSource, passwordSource, accountDestiny, passwordDestiny)) {
+		migration.accounts.push(
+			{
+				"accountSource": {
+					"mail": accountSource.val(),
+					"password": passwordSource.val(),
+				},
+				"accountDestiny": {
+					"mail": accountDestiny.val(),
+					"password": passwordDestiny.val()
+				}
+			})
 		$("#accountSource").val("");
 		$("#passwordSource").val("");
 		$("#accountDestiny").val("");
 		$("#passwordDestiny").val("");
 		$("#accountSource").focus();
+
+		renderTable();
+	}
+
+
+}
+function remove(number) {
+
+	var menuAccount = $("#menuAccount");
+
+	if (menuAccount.hasClass("cadastro")) {
+		accounts.splice(number, 1);
+
+	}
+
+	renderTable();
+
 }
 
-function remove(number){
-	var  menuAccount = $("#menuAccount");
-	if(menuAccount.hasClass( "cadastro" )){
-		var id = "#account" + number + "";
-		acoounts.splice(number -1,1);
-		$( id ).remove();
+
+function edit(number) {
+	var menuAccount = $("#menuAccount");
+	if (menuAccount.hasClass("cadastro")) {
+
+		menuAccount.addClass("editar")
+
+		menuAccount.removeClass("cadastro")
+
+		$("#accountSource").val(accounts[number].accountSource);
+		$("#passwordSource").val(accounts[number].passwordSource);
+		$("#accountDestiny").val(accounts[number].accountDestiny);
+		$("#passwordDestiny").val(accounts[number].passwordDestiny);
+
+		var menuEditar =
+			`
+		<div class="offset6">
+        	<a class="span2  btn btn " href="javascript:editCancelar();">Cancelar</a>
+        	<a class="span2 btn btn-primary " href="javascript:editConfirmar(${number});">Editar</a>     
+      	</div>
+ 	`
+
+		$("#menuAccount").empty()
+		$("#menuAccount").append(menuEditar)
 	}
 }
 
@@ -109,7 +235,7 @@ function editCancelar() {
 	$("#accountSource").focus();
 
 	var menuAdd =
-	`
+		`
 	<div class="span3 offset9">
       <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
      </div> 
@@ -117,17 +243,17 @@ function editCancelar() {
 	$("#menuAccount").empty()
 	$("#menuAccount").append(menuAdd)
 
-	var  menuAccount = $("#menuAccount");
+	var menuAccount = $("#menuAccount");
 	menuAccount.removeClass("editar")
 	menuAccount.addClass("cadastro")
 }
 
 function editConfirmar(number) {
-	remove(number);
+	accounts.splice(number, 1);
 	addAcoount();
-	
+
 	var menuAdd =
-	`
+		`
 	<div class="span3 offset9">
       <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
      </div> 
@@ -135,141 +261,209 @@ function editConfirmar(number) {
 	$("#menuAccount").empty()
 	$("#menuAccount").append(menuAdd)
 
-	var  menuAccount = $("#menuAccount");
+	var menuAccount = $("#menuAccount");
 	menuAccount.removeClass("editar")
 	menuAccount.addClass("cadastro")
 
 }
 
-function edit(number){
-	var  menuAccount = $("#menuAccount");
-	if(menuAccount.hasClass( "cadastro" )){
-	
-	menuAccount.addClass("editar")
-
-	menuAccount.removeClass("cadastro")
-
-	$("#accountSource").val(acoounts[number -1].accountSource);
-	$("#passwordSource").val(acoounts[number -1].passwordSource);
-	$("#accountDestiny").val(acoounts[number -1].accountDestiny);
-	$("#passwordDestiny").val(acoounts[number -1].passwordDestiny);
-
-	var  menuEditar= 
-	`
-		<div class="offset6">
-        	<a class="span2  btn btn " href="javascript:editCancelar();">Cancelar</a>
-        	<a class="span2 btn btn-primary " href="javascript:editConfirmar(${number});">Editar</a>     
-      	</div>
- 	`
-
- $("#menuAccount").empty()
- $("#menuAccount").append(menuEditar)
-	}
-}	
-
-
-function serverProvider(){
+function validProvider() {
 	var providerSelect = $("#provider").val();
-	if(providerSelect == "Outro"){
-		$("#ServerOther").removeClass("hide");	
-		provider = {
-			"severSource":$("#ServerOtherHost").val(),
-			"porSource":$("#ServerOtherPort").val(),
-			"sslSource":$("#ServerOtherSSL").val()
+	if (providerSelect == null) {
+		$("#severError").removeClass("hide");
+		$("#provider").addClass("erroPers")
+		return false;
+	} else {
+		$("#severError").addClass("hide");
+		$("#provider").removeClass("erroPers")
+
+		if (providerSelect == "Outro") {
+			valid = true;
+			if ($("#ServerOtherHost").val() == null | $("#ServerOtherHost").val() == "") {
+				valid = false;
+				$("#ServerOtherHost").addClass("erroPers")
+			} else {
+				$("#ServerOtherHost").removeClass("erroPers")
+			}
+			if ($("#ServerOtherPort").val() == null | $("#ServerOtherPort").val() == "") {
+				valid = false;
+				$("#ServerOtherPort").addClass("erroPers")
+			} else {
+				$("#ServerOtherPort").removeClass("erroPers")
+			}
+			if ($("#ServerOtherSSL").val() == null | $("#ServerOtherSSL").val() == "") {
+				valid = false;
+				$("#ServerOtherSSL").addClass("erroPers")
+			} else {
+				$("#ServerOtherSSL").removeClass("erroPers")
+			}
+
+
+			return valid;
 		}
-	}else{	
+
+
+
+		return true;
+	}
+}
+
+function serverProvider() {
+	var providerSelect = $("#provider").val();
+	validProvider()
+	if (providerSelect == "Outro") {
+		$("#ServerOther").removeClass("hide");
+
+		provider = {
+			server: {
+				"host": $("#ServerOtherHost").val(),
+				"port": $("#ServerOtherPort").val(),
+				"ssl": $("#ServerOtherSSL").val()
+			},
+			name: "Outro"
+		}
+
+	} else {
 		$("#ServerOther").addClass("hide");
 		$("#ServerOtherHost").val('')
 		$("#ServerOtherPort").val('')
 		$("#ServerOtherSSL").val('')
-		
-		provider = {
-			"severSource": providers[providerSelect].host,
-			"porSource":providers[providerSelect].port,
-			"sslSource":providers[providerSelect].ssl,
-		}
-	}		
-	
 
+		provider = {
+			server: {
+				"host": providers[providerSelect].host,
+				"port": providers[providerSelect].port + "",
+				"ssl": providers[providerSelect].ssl,
+			},
+			name: providers[providerSelect].name
+		}
+		console.log(provider);
+		migration.serverSourceIMAP = provider.server;
+		return provider;
+	}
 
 	return provider;
 }
-
-
-function dateAndTimeSchedule(){
+function validDateAndTimeSchedule() {
 	var dateAndTime = $("#formSchedule input[type='radio']:checked").val();
-	if(dateAndTime == "schedule"){
-		$("#dateAndTimeSchedule").removeClass("hide");
-		return ($("#scheduleDate").val() +" "+ $("#scheduleTime").val());
-	}else{
-		$("#dateAndTimeSchedule").addClass("hide");
-		return (null);
+	var valid;
+	if (dateAndTime == null) {
+		$("#dateAndTimeScheduleError").removeClass("hide");
+		$(".radio").addClass("error");
+		valid = false;
+	} else {
+		$("#dateAndTimeScheduleError").addClass("hide");
+		$(".radio").removeClass("error");
+		valid = true;
+	}
+
+	if (dateAndTime == "schedule") {
+		if ($("#scheduleDate").val() == "") {
+			$("#scheduleDate").addClass("erroPers");
+			valid = false;
+		} else {
+			$("#scheduleDate").removeClass("erroPers");
+			valid = true;
+		}
+		if ($("#scheduleTime").val() == "") {
+			$("#scheduleTime").addClass("erroPers");
+			valid = false;
+		} else {
+			$("#scheduleTime").removeClass("erroPers");
+			valid = true;
+		}
+		valid == false;
 	}
 
 
-	
+	return valid;
+}
+
+function getDomain() {
+	var reg = /^(\w+([-+.']\w+)*)@(\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
+	var match = reg.exec(migration.accounts[0].accountDestiny.mail);
+	migration.domain = match[3];
+	return match[3];
+
+}
+function dateAndTimeSchedule() {
+	validDateAndTimeSchedule();
+	var dateAndTime = $("#formSchedule input[type='radio']:checked").val();
+	if (dateAndTime == "schedule") {
+		$("#dateAndTimeSchedule").removeClass("hide");
+		let date = $("#scheduleDate").val();
+		date = date[8] + date[9] + "/" + date[5] + date[6] + "/" + date[0] + date[1] + date[2] + date[3];
+
+		migration.dateAndTime = date + " " + $("#scheduleTime").val();
+		return (date + " " + $("#scheduleTime").val());
+	} else {
+		$("#dateAndTimeSchedule").addClass("hide");
+		migration.dateAndTime = "null";
+		return ("null");
+	}
 }
 
 function loadData() {
-	validOther("provider");
-	
-	if(acoounts.length <= 0){
-		return 0;	
-	}
 
-	
+	if (!validProvider()) return 0;
+	if (migration.accounts.length <= 0) {
+		$("#AccountsTableError").removeClass("hide");
+		return;
+	} else {
+		$("#AccountsTableError").addClass("hide");
+	}
+	if (!validDateAndTimeSchedule()) return 0;
+	getDomain();
+	renderTableViwer();
+	$("#nameProviderView").text("Provedor: " + provider.name);
+	$("#severProviderView").text("Servidor IMAP: " + provider.server.host);
+	$("#portProviderView").text("Porta IMAP: " + provider.server.port);
+	$("#sslProviderView").text("SSL: " + provider.server.ssl);
+	var time = dateAndTimeSchedule();
+	console.log(time);
+	$("#dateAndTime").text("Horário: " + (time == "null" ? "Qualquer momento" : time));
+
+
 	jQuery.noConflict();
-    $("#myModal").modal();
+	$("#myModal").modal();
+}
 
-	if(acoounts.length > 0){
-		$( "#accountListView" ).empty();
-		acoounts.forEach(item => {
-			let html = "<tr'> <td>"+item.accountSource+"</td> <td>"+item.passwordSource+"</td> <td>"+item.accountDestiny+"</td> <td>"+item.passwordDestiny+"<td></tr>";
-			$( "#accountListView" ).append( html );
-		});
-	}else{
-		$( "#accountListView" ).append("<tr> <td colspan='4'>Nenhuma conta cadastrada</td></tr>");
+async function enviar() {
+	var date = new Date();
+	var milliseconds = date.getMilliseconds();
+
+	var data = await JSON.stringify(
+		{
+			"idMigration": milliseconds * migration.domain.length,
+			"domain": migration.domain,
+			"serverSourceIMAP": migration.serverSourceIMAP,
+			"serverDestinyIMAP": null,
+			"accounts": migration.accounts,
+			"dateAndTime": migration.dateAndTime
+		}
+	);
+
+	console.log(data);
+	var settings = {
+		"async": true,
+		"crossDomain": true,
+		"url": "http://localhost:5000/api",
+		"method": "POST",
+		"headers": {
+			"content-type": "application/json"
+		},
+		success: function () {
+			alert("enviado \n id:" + milliseconds * migration.domain.length, window.location.href = '/')
+		},
+		"processData": false,
+		"data": data
 	}
-	
+	console.log(settings);
+	$.ajax(settings).done(function (response) {
+	});
+
 }
 
 
 
-// {
-//     "idMigration": 1258,
-// 		"domain":"redehost.com.br",
-// 		"dateAndTime": "22/05/2018 12:00",
-//      "serverSourceIMAP": {
-//         "host":"imap",
-//         "porta":"143",
-//         "ssl":"false"
-//     },
-//      "serverDestinyIMAP": {
-//         "host":"imap",
-//         "porta":"143",
-//         "ssl":"false"
-//     },
-//      "accounts": [
-//         {
-//             "accountDestiny": {
-//                 "mail": "matheus@redehost.com.br",
-//                 "password": "1234"
-//             },
-//             "accountSource": {
-//                 "mail": "matheus@redehost.com.br",
-//                 "password": "1234"
-//             }
-//         },
-//         {
-//             "accountDestiny": {
-//                 "mail": "matheus@redehost.com.br",
-//                 "password": "1234"
-//             },
-//             "accountSource": {
-//                 "mail": "matheus@redehost.com.br",
-//                 "password": "1234"
-//             }
-//         }
-//     ]
-    
-// }
+
