@@ -204,7 +204,12 @@ function Update(id) {
                     "key": getCookie("key")
                 },
                 success: function (response) {
+
                     alert("Alterado")
+
+                    if($("#status").val() == 2){
+                        window.location.href = '/Home/Admin'
+                    }
                 },
                 "processData": false,
                 "data": null

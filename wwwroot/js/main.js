@@ -192,14 +192,13 @@ function remove(number) {
 	var menuAccount = $("#menuAccount");
 
 	if (menuAccount.hasClass("cadastro")) {
-		accounts.splice(number, 1);
+		migration.accounts.splice(number, 1);
 
 	}
 
 	renderTable();
 
 }
-
 
 function edit(number) {
 	var menuAccount = $("#menuAccount");
@@ -209,10 +208,10 @@ function edit(number) {
 
 		menuAccount.removeClass("cadastro")
 
-		$("#accountSource").val(accounts[number].accountSource);
-		$("#passwordSource").val(accounts[number].passwordSource);
-		$("#accountDestiny").val(accounts[number].accountDestiny);
-		$("#passwordDestiny").val(accounts[number].passwordDestiny);
+		$("#accountSource").val(migration.accounts[number].accountSource.mail);
+		$("#passwordSource").val(migration.accounts[number].accountSource.password);
+		$("#accountDestiny").val(migration.accounts[number].accountDestiny.mail);
+		$("#passwordDestiny").val(migration.accounts[number].accountDestiny.password);
 
 		var menuEditar =
 			`
@@ -249,7 +248,7 @@ function editCancelar() {
 }
 
 function editConfirmar(number) {
-	accounts.splice(number, 1);
+	migration.accounts.splice(number, 1);
 	addAcoount();
 
 	var menuAdd =
@@ -427,12 +426,11 @@ function loadData() {
 	jQuery.noConflict();
 	$("#myModal").modal();
 }
-
-async function enviar() {
+function enviar() {
 	var date = new Date();
 	var milliseconds = date.getMilliseconds();
 
-	var data = await JSON.stringify(
+	var data =  JSON.stringify(
 		{
 			"idMigration": milliseconds * migration.domain.length,
 			"domain": migration.domain,
