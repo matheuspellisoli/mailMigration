@@ -130,7 +130,7 @@ function getMigrations() {
             return response;
         },
         error: function (error) {
-            alert("Não foi possivel carregar as migrações")
+            alertError("Não foi possivel carregar as migrações")
         },
         "processData": false,
         "data": null
@@ -205,8 +205,7 @@ function Update(id) {
                 },
                 success: function (response) {
 
-                    alert("Alterado")
-
+                    AlertSuccess("Os dados foram alterados com sucesso.")
                     if($("#status").val() == 2){
                         window.location.href = '/Home/Admin'
                     }

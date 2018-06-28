@@ -30,7 +30,7 @@ function login() {
 			window.location = "/Home/Admin";
 		},
 		error: function (error) {
-			alert('error; ' + eval(error));
+			AlertError("e-mail ou senha não conferem.")
 		},
 		"processData": false,
 		"data":data

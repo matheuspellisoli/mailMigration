@@ -8,9 +8,10 @@
     <title>@ViewData["Title"] - mail_migration</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
         <link rel="stylesheet" href="~/css/bootstrap-override.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/toastr.min.css" />
     </environment>
 
     <environment exclude="Development">
@@ -18,7 +19,9 @@
         <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/bootstrap-override.css" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/toastr.min.css" />
     </environment>
+
 </head>
 
 <body>
@@ -82,30 +85,32 @@
             </div>
         </div>
         <div class="row span12">
-
-            <div class="span12 margin-no hide" id="severError">
-                <p class="error">Selecione um provedor.</p>
-            </div>
         </div>
         <div class="row span12 control">
             <label>Contas de e-mail a serem migradas.</label>
 
-            <!-- <div>
-      <input type="text" id="accountSource" placeholder="E-mail de origem" oninput="javascript:validMail($(this).attr('id'));" class="span4 margin-small error">
-      <p class="error">Digite um e-mail de destino valida</p>
-    </div>
-     -->
-            <input type="text" id="accountSource" placeholder="E-mail de origem" class="span4 margin-small ">
-
-            <input type="password" id="passwordSource" placeholder="Senha do e-mail" class="span2 margin-small ">
-
-            <input type="text" id="accountDestiny" placeholder="E-mail de destino" class="span4 margin-small ">
-
-            <input type="password" id="passwordDestiny" placeholder="Senha do e-mail" class="span2 margin-small ">
-            <p id="accountError" class="error hide">Verifique se os campos em vermelho estão corretos.</p>
-            <div class="alert alert-error soft hide " id="">
+            <div class="span3 margin-no ">
+                <label>E-mail de origem</label>
+                <input type="text" id="accountSource" placeholder="Ex: contato@seudomínio" class="margin-no ">
             </div>
 
+            <div class="span3 margin-no">
+                <label>Senha do e-mail</label>
+                <input type="password" id="passwordSource" placeholder="" class="margin-no ">
+            </div>
+
+            <div class="span3 margin-no">
+                <label>E-mail de destino</label>
+                <input type="text" id="accountDestiny" placeholder="Ex: contato@seudomínio" class="margin-no ">
+            </div>
+
+            <div class="span3 margin-no" style='text-align:  center'>
+                <label>Senha do e-mail</label>
+                <input type="password" id="passwordDestiny" placeholder="" class="margin-no ">
+            </div>
+            <div class="alert alert-error soft hide " id="">
+            </div>
+            
             <div id="menuAccount" class="margin-no cadastro">
                 <div class="span3 offset9">
                     <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
@@ -159,9 +164,7 @@
                 <input type="time" class="span2" onchange="javascript:dateAndTimeSchedule();" id="scheduleTime">
 
             </div>
-            <div class="span12 margin-no hide" id="dateAndTimeScheduleError">
-                <p class="error">Selecione o horário.</p>
-            </div>
+           
         </div>
         <div class="row  span12   margin-small-t ">
             <div class="span3 offset9">
@@ -217,6 +220,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="../js/toastr.min.js"></script>
+    <script src="../js/MyToastr.js"></script>
     <script src="js/main.js"></script>
 
 </body>

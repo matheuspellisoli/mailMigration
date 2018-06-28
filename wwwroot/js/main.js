@@ -62,6 +62,7 @@ $("#passwordDestiny").focusout(function () {
 
 function closeModal() {
 	$('#myModal').modal('hide');
+	
 }
 
 $(document).ready(function ($) {
@@ -69,8 +70,6 @@ $(document).ready(function ($) {
 		$("#provider").append(new Option(item.name, providers.indexOf(item)));
 	});
 	$("#provider").append(new Option("Outro", "Outro"));
-
-
 	renderTable();
 
 
@@ -105,11 +104,16 @@ function maskString(value) {
 function renderTable() {
 
 	$("#accountList").empty();
-	migration.accounts.forEach((account, index) => {
-		let html = "<tr id='account" + index + "'> <td>" + account.accountSource.mail + "</td> <td>" + maskString(account.accountSource.password) + "</td> <td>" + account.accountDestiny.mail + "</td> <td>" + maskString(account.accountDestiny.password) + "</td> <td><a  href='javascript:edit(" + (index) + ");'>	<img src='/images/edit.svg' style='height: 20px'></a></td></td> <td><a  href='javascript:remove(" + index + ");'>	<img src='/images/garbage.svg' style='height: 20px'></a></td></tr>";
+	if(migration.accounts.length <= 0){
+		let html = "<tr'><td colspan='4' style='text-align:center'>Nenhuma conta foi adicionada.</td></tr>";
 		$("#accountList").append(html);
-	});
-}
+	}else{
+		migration.accounts.forEach((account, index) => {
+			let html = "<tr id='account" + index + "'> <td>" + account.accountSource.mail + "</td> <td>" + maskString(account.accountSource.password) + "</td> <td>" + account.accountDestiny.mail + "</td> <td>" + maskString(account.accountDestiny.password) + "</td> <td><a  href='javascript:edit(" + (index) + ");'>	<img src='/images/edit.svg' style='height: 20px'></a></td></td> <td><a  href='javascript:remove(" + index + ");'>	<img src='/images/garbage.svg' style='height: 20px'></a></td></tr>";
+			$("#accountList").append(html);
+		});
+	}
+	}
 function renderTableViwer() {
 
 	$("#accountListView").empty();
@@ -120,10 +124,12 @@ function renderTableViwer() {
 }
 function validAcoount(accountSource, passwordSource, accountDestiny, passwordDestiny) {
 	var valid = true;
+	var cont = 0;
 	var reg = /^(\w+([-+.']\w+)*)@(\w+([-.]\w+)*\.\w+([-.]\w+)*)$/;
 
 	if (validPassword(passwordSource.val())) {
 		valid = false;
+		cont ++;
 		passwordSource.addClass("erroPers");
 	} else {
 		passwordSource.removeClass("erroPers");
@@ -131,29 +137,33 @@ function validAcoount(accountSource, passwordSource, accountDestiny, passwordDes
 
 	if (validPassword(passwordDestiny.val())) {
 		valid = false;
+		cont ++;
 		passwordDestiny.addClass("erroPers");
 	} else {
 		passwordDestiny.removeClass("erroPers");
 	}
 	if (!reg.test(accountSource.val())) {
 		valid = false;
+		cont ++;
 		accountSource.addClass("erroPers");
 	} else {
 		accountSource.removeClass("erroPers");
 	}
 	if (!reg.test(accountDestiny.val())) {
 		valid = false;
+		cont ++;
 		accountDestiny.addClass("erroPers");
 	} else {
 		accountDestiny.removeClass("erroPers");
 	}
 
 	if (!valid) {
-		$("#accountError").removeClass("hide");
-	} else {
-		$("#accountError").addClass("hide");
-	}
-
+		if(cont == 1){
+			AlertError("Verifique o campo em vermelho.")
+		}else{
+			AlertError("Verifique os campos em vermelho.")
+		}
+	} 
 	return valid;
 
 }
@@ -269,11 +279,10 @@ function editConfirmar(number) {
 function validProvider() {
 	var providerSelect = $("#provider").val();
 	if (providerSelect == null) {
-		$("#severError").removeClass("hide");
+		AlertError("selecione um provedor.")
 		$("#provider").addClass("erroPers")
 		return false;
 	} else {
-		$("#severError").addClass("hide");
 		$("#provider").removeClass("erroPers")
 
 		if (providerSelect == "Outro") {
@@ -347,7 +356,7 @@ function validDateAndTimeSchedule() {
 	var dateAndTime = $("#formSchedule input[type='radio']:checked").val();
 	var valid;
 	if (dateAndTime == null) {
-		$("#dateAndTimeScheduleError").removeClass("hide");
+		AlertError("Selecione um horário.");
 		$(".radio").addClass("error");
 		valid = false;
 	} else {
@@ -451,7 +460,8 @@ function enviar() {
 			"content-type": "application/json"
 		},
 		success: function () {
-			alert("enviado \n id:" + milliseconds * migration.domain.length, window.location.href = '/')
+			AlertSuccess("Solicitação enviada com sucesso <br>");
+			closeModal();			
 		},
 		"processData": false,
 		"data": data

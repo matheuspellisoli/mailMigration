@@ -8,9 +8,10 @@
     <title>@ViewData["Title"] - mail_migration</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
         <link rel="stylesheet" href="~/css/bootstrap-override.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/toastr.min.css" />
     </environment>
 
     <environment exclude="Development">
@@ -18,6 +19,7 @@
         <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/bootstrap-override.css" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+         <link rel="stylesheet" href="~/css/toastr.min.css" />
     </environment>
 </head>
 
@@ -70,12 +72,11 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="http://localhost:5000/lib/jquery/dist/jquery.min.js"></script>
-    <script src="http://localhost:5000/js/main.js"></script>
-    <script src="http://localhost:5000/js/login.js"></script>
-
-
+    <script src="../lib/jquery/dist/jquery.min.js"></script>    
+     <script src="../js/toastr.min.js"></script>
+    <script src="../js/MyToastr.js"></script>
+    <script src="../js/login.js"></script>
     </script>
 </body>
 
-</html>
+</html> 

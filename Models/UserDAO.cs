@@ -11,10 +11,9 @@ namespace mail_migration.Models
     public class UserDAO
     {
 
-
-        private Databaseconfirmation conn = new Databaseconfirmation();
         private IMongoCollection<UserModel> _collection;
 
+        private Databaseconfirmation conn = new Databaseconfirmation();
         public UserDAO()
         {
             _collection = conn.getDatabase().GetCollection<UserModel>("DBUsermigration");

@@ -11,17 +11,23 @@ namespace mail_migration
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
+        
+        private IConfiguration _configuration;
+        public Startup(IHostingEnvironment env)
+        {          
+
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json");
+            _configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IConfiguration>(_configuration);
             // services.aut
             services.AddMvc();
         }
@@ -37,16 +43,8 @@ namespace mail_migration
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
             app.UseStaticFiles();
-
-             app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "login/{action=Login}");
-
-            });
 
             app.UseMvc(routes =>
             {
