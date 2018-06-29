@@ -7,20 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - mail_migration</title>
 
-    <environment include="Development">
-        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
-        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/toastr.min.css" />
-    </environment>
-
-    <environment exclude="Development">
-        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
-        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/toastr.min.css" />
-    </environment>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toastr.min.css" />
 
 </head>
 
@@ -89,32 +80,41 @@
         <div class="row span12 control">
             <label>Contas de e-mail a serem migradas.</label>
 
-            <div class="span3 margin-no ">
-                <label>E-mail de origem</label>
-                <input type="text" id="accountSource" placeholder="Ex: contato@seudomínio" class="margin-no ">
+            <div>
+                <div class="span4 margin-no ">
+                    <label>E-mail de origem</label>
+                    <input type="text" id="accountSource" placeholder="Ex: contato@seudomínio" class="margin-no span4">
+                </div>
+    
+                <div class="span2 ">
+                    <label>Senha do e-mail</label>
+                    <input type="password" id="passwordSource" placeholder="" class="margin-no span2">
+                </div>
             </div>
 
-            <div class="span3 margin-no">
-                <label>Senha do e-mail</label>
-                <input type="password" id="passwordSource" placeholder="" class="margin-no ">
+            <div class="pull-right">
+                
+                <div class="span4  margin-no">
+                    <label>E-mail de destino</label>
+                    <input type="text" id="accountDestiny" placeholder="Ex: contato@seudomínio" class="margin-no span4">
+                </div>
+
+                
+                <div class="span2 ">
+                    <label>Senha do e-mail</label>
+                    <input type="password" id="passwordDestiny" placeholder="" class="margin-no span2">
+                </div>
+
             </div>
 
-            <div class="span3 margin-no">
-                <label>E-mail de destino</label>
-                <input type="text" id="accountDestiny" placeholder="Ex: contato@seudomínio" class="margin-no ">
-            </div>
-
-            <div class="span3 margin-no" style='text-align:  center'>
-                <label>Senha do e-mail</label>
-                <input type="password" id="passwordDestiny" placeholder="" class="margin-no ">
-            </div>
             <div class="alert alert-error soft hide " id="">
             </div>
             
             <div id="menuAccount" class="margin-no cadastro">
-                <div class="span3 offset9">
+                <div class="pull-right">
                     <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
                 </div>
+       
             </div>
         </div>
 
@@ -220,9 +220,9 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
     <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="../js/toastr.min.js"></script>
-    <script src="../js/MyToastr.js"></script>
-    <script src="js/main.js"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="~/js/MyToastr.js"></script>
+    <script src="~/js/main.js"></script>
 
 </body>
 

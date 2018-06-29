@@ -6,21 +6,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - mail_migration</title>
-
-    <environment include="Development">
-        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
-        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/toastr.min.css" />
-    </environment>
-
-    <environment exclude="Development">
-        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
-        <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/bootstrap-override.css" />
-        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-         <link rel="stylesheet" href="~/css/toastr.min.css" />
-    </environment>
+    
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/bootstrap-override.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toastr.min.css" />
 </head>
 
 <body>
@@ -49,6 +40,9 @@
         <div class="visible-desktop margin-medium "></div>
         <div class=" span12">
             <div class="offset4 span4">
+                <h3>Login</h3>
+            </div>
+            <div class="offset4 span4">
                 <input class="span4" type="text" id="mail" placeholder="E-mail">
 
             </div>
@@ -72,11 +66,11 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="../lib/jquery/dist/jquery.min.js"></script>    
-     <script src="../js/toastr.min.js"></script>
-    <script src="../js/MyToastr.js"></script>
-    <script src="../js/login.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="~/js/MyToastr.js"></script>
+    <script src="~/js/login.js"></script>
     </script>
 </body>
 
-</html> 
+</html>

@@ -35,7 +35,15 @@ const providers = [
 ]
 
 var migration = {
-	accounts: [],
+	accounts: [
+
+		{
+
+			accountDestiny:{mail: "matheus.pellisoli@redehost.com", password: "1233"},
+			accountSource:{mail: "matheus.pellisoli@redehost.com", password: "1234"}
+		}
+
+	],
 	idMigration: 0,
 	domain: "",
 	serverSourceIMAP: {},
@@ -225,7 +233,7 @@ function edit(number) {
 
 		var menuEditar =
 			`
-		<div class="offset6">
+		<div class="pull-right">
         	<a class="span2  btn btn " href="javascript:editCancelar();">Cancelar</a>
         	<a class="span2 btn btn-primary " href="javascript:editConfirmar(${number});">Editar</a>     
       	</div>
@@ -245,9 +253,9 @@ function editCancelar() {
 
 	var menuAdd =
 		`
-	<div class="span3 offset9">
-      <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
-     </div> 
+		<div class="pull-right">
+		<a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
+	</div>
 	`
 	$("#menuAccount").empty()
 	$("#menuAccount").append(menuAdd)
@@ -263,9 +271,9 @@ function editConfirmar(number) {
 
 	var menuAdd =
 		`
-	<div class="span3 offset9">
-      <a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
-     </div> 
+		<div class="pull-right">
+		<a class="span2 btn btn-primary " href="javascript:addAcoount();">Adicionar e-mail</a>
+	</div> 
 	`
 	$("#menuAccount").empty()
 	$("#menuAccount").append(menuAdd)
@@ -454,7 +462,7 @@ function enviar() {
 	var settings = {
 		"async": true,
 		"crossDomain": true,
-		"url": "http://localhost:5000/api",
+		"url": "/api",
 		"method": "POST",
 		"headers": {
 			"content-type": "application/json"
