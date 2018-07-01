@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using mail_migration.Models;
 
 namespace mail_migration
 {
@@ -20,6 +21,9 @@ namespace mail_migration
             .SetBasePath(env.ContentRootPath)
             .AddJsonFile("appsettings.json");
             _configuration = builder.Build();
+
+            ConfiguretionModel.addConfig("RSAKey",_configuration.GetValue<String>("RSAKey"));
+            ConfiguretionModel.addConfig("MongoDBString",_configuration.GetValue<String>("MongoDBString"));
         }
 
        
@@ -53,6 +57,8 @@ namespace mail_migration
                     template: "{controller=Home}/{action=Index}/{id?}");
 
             });
+
+            
         }
     }
 }

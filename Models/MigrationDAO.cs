@@ -42,11 +42,11 @@ namespace mail_migration.Models
 
         public List<MigrationOperetionModel> getAllMigration()
         {
-            var list = _collection.Find(new BsonDocument()).ToList();
+            var filter = Builders<MigrationOperetionModel>.Sort.Ascending("dateAndTime");
+            var list = _collection.Find(new BsonDocument()).Sort(filter).ToList();
 
             return list;
         }
-
 
     }
 }

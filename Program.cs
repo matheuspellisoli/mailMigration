@@ -15,6 +15,7 @@ namespace mail_migration
          public IConfiguration Configuration { get; set; }
         public static void Main(string[] args)
         {
+            
             BuildWebHost(args).Run();
         }
 

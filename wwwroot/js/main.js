@@ -35,15 +35,7 @@ const providers = [
 ]
 
 var migration = {
-	accounts: [
-
-		{
-
-			accountDestiny:{mail: "matheus.pellisoli@redehost.com", password: "1233"},
-			accountSource:{mail: "matheus.pellisoli@redehost.com", password: "1234"}
-		}
-
-	],
+	accounts: [],
 	idMigration: 0,
 	domain: "",
 	serverSourceIMAP: {},

@@ -39,14 +39,20 @@ function isLogin() {
 function RederMigration(migartions) {
 
     $("#accountListView").empty();
-    migartions.forEach((migartion, index) => {
-        let date = migartion.dateAndTime != "null" ? migartion.dateAndTime : "Qualquer momento";
-
-        if (migartion.status >= 0 && migartion.status <= 1) {
-            let html = "<tr><td>" + migartion.domain + "</td><td>" + date + "</td><td><a href='javascript:migartionModal(" + migartions[index].idMigration + ")'><img src='/images/message.svg'  style='height: 30px;'></a></td></tr>"
-            $("#listView").append(html);
-        }
-    });
+    if(migartions.length <= 0){
+		let html = "<tr'><td colspan='2' style='text-align:center'>Não há migrações.</td></tr>";
+		$("#listView").append(html);
+	}else{
+        migartions.forEach((migartion, index) => {
+            let date = migartion.dateAndTime != "null" ? migartion.dateAndTime : "Qualquer momento";
+    
+            if (migartion.status >= 0 && migartion.status <= 1) {
+                let html = "<tr><td>" + migartion.domain + "</td><td>" + date + "</td><td><a href='javascript:migartionModal(" + migartions[index].idMigration + ")'><img src='/images/message.svg'  style='height: 30px;'></a></td></tr>"
+                $("#listView").append(html);
+            }
+        });
+    }
+   
 }
 
 function migartionModal(id) {

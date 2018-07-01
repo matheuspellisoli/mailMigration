@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Microsoft.Extensions.Configuration;
+using mail_migration.Models;
 
 namespace mail_migration
 {
@@ -12,7 +13,7 @@ namespace mail_migration
         private static IMongoDatabase _database;
         
         public Databaseconfirmation(){
-            _client = new MongoClient("mongodb://DBUserMigration:e2SW3!hX@ds263670.mlab.com:63670/migration");
+            _client = new MongoClient(ConfiguretionModel.getConfig("MongoDBString"));
             _database = _client.GetDatabase("migration");
         }
 
